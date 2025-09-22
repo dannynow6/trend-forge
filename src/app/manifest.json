@@ -1,0 +1,29 @@
+{
+  "name": "TrendForge - AI-Powered LinkedIn Content Generator",
+  "short_name": "TrendForge",
+  "description": "Create viral LinkedIn content with AI-powered precision. Generate engaging posts, discover trending topics, and grow your professional presence in minutes, not hours.",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "500x500",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "categories": [
+    "productivity",
+    "social",
+    "marketing",
+    "linkedin",
+    "content",
+    "generator"
+  ],
+  "author": "Daniel Garro",
+  "developer": {
+    "name": "Daniel Garro",
+    "url": "https://dgdesignanddev.com/"
+  },
+  "lang": "en-US",
+  "scope": "/"
+}
