@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
 import type { Metadata } from "next";
 import PostDetailsClient from "@/components/post-details/PostDetailsClient";
 

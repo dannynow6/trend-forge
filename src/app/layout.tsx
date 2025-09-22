@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
 import type { Metadata } from "next";
 import "./globals.css";
 import { urbanist } from "@/components/ui/fonts";

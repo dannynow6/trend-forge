@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
 import { NextRequest, NextResponse } from "next/server";
 import {
   Agent,
