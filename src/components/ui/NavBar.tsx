@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import SignOut from "@/components/auth/SignOut";
 import { motion } from "motion/react";
 import NavDropdownLink from "./NavDropdownLink";
-import { Lightbulb, MessageSquare, House } from "lucide-react";
+import { Lightbulb, MessageSquare, Sparkles } from "lucide-react";
 
 const NavBar = () => {
   const { user, isLoading } = useAuth() as { user: any; isLoading: boolean };
@@ -146,6 +146,21 @@ const NavBar = () => {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.2 }}
+                    className="px-4 py-2"
+                  >
+                    <NavDropdownLink href="/" linkText="New Post or Ideas">
+                      <Sparkles
+                        className="w-4 h-4"
+                        aria-label="Generate new post or ideas"
+                        strokeWidth={1.5}
+                      />{" "}
+                      New Post or Ideas
+                    </NavDropdownLink>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ delay: 0.1, duration: 0.2 }}
                     className="px-4 py-2"
                   >
@@ -171,21 +186,6 @@ const NavBar = () => {
                         strokeWidth={1.5}
                       />{" "}
                       My Ideas
-                    </NavDropdownLink>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.2 }}
-                    className="px-4 py-2"
-                  >
-                    <NavDropdownLink href="/" linkText="Home">
-                      <House
-                        className="w-4 h-4"
-                        aria-label="Go to home page"
-                        strokeWidth={1.5}
-                      />{" "}
-                      Home
                     </NavDropdownLink>
                   </motion.div>
                   <motion.div
