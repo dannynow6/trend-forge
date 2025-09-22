@@ -59,8 +59,8 @@ Create viral LinkedIn content with AI-powered precision. Generate engaging posts
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/dannynow6/agent-growth-hub.git
-   cd agent-growth-hub
+   git clone https://github.com/dannynow6/trend-forge.git
+   cd trend-forge
    ```
 
 2. **Install dependencies**
