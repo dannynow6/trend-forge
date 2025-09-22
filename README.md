@@ -8,7 +8,12 @@ Create viral LinkedIn content with AI-powered precision. Generate engaging posts
 
 ## Note on Using TrendForge
 
-- **Local Deployment** - TrendForge was created for local deployment and does not have complete SEO files created. If deployed in production environment, I recommend creating manifest.json, robots.ts, sitemap.ts, as well as updating layout.ts metadata
+- **📦 Local Deployment** - TrendForge was built for local deployment and development. It does not currently include a complete SEO setup.
+
+- If you plan to deploy this project in a production environment, you should:
+  - Create and configure a manifest.json for PWA support
+  - Add robots.ts and sitemap.ts to manage search engine indexing
+  - Update layout.ts to include accurate metadata (title, description, Open Graph tags, etc.)
 
 ## ✨ Features
 
