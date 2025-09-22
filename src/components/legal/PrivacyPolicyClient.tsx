@@ -94,7 +94,7 @@ const PrivacyPolicyClient = () => {
       <LegalHero
         icon={Shield}
         title="Privacy Policy"
-        description="Your privacy is important to us. This policy explains how Agent Growth Hub collects, uses, and protects your personal information."
+        description="Your privacy is important to us. This policy explains how TrendForge collects, uses, and protects your personal information."
         gradientColors={gradientColors}
         itemVariants={itemVariants}
         iconVariants={iconVariants}

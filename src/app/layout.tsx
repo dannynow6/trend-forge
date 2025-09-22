@@ -12,10 +12,10 @@ import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Agent Growth Hub",
-    default: "Agent Growth Hub - AI-Powered LinkedIn Content Generator",
+    template: "%s | TrendForge",
+    default: "TrendForge - AI-Powered LinkedIn Content Generator",
   },
-  description: "Agent Growth Hub - AI-Powered LinkedIn Content Generator",
+  description: "TrendForge - AI-Powered LinkedIn Content Generator",
 };
 
 export default function RootLayout({

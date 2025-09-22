@@ -21,7 +21,7 @@ const Footer = () => {
         </Link>
         <p className="text-slate-800 text-xs sm:text-sm lg:text-base">
           Copyright &copy; {new Date().getFullYear()} - All rights reserved by
-          Agent Growth Hub
+          TrendForge
         </p>
         <div className="flex flex-row items-center justify-center gap-2.5">
           <FooterNavLink href="/about" linkText="About" />

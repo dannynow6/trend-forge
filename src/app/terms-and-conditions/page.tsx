@@ -5,9 +5,9 @@ import { urbanist } from "@/components/ui/fonts";
 import TermsAndConditionsClient from "@/components/legal/TermsAndConditionsClient";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions | Agent Growth Hub",
+  title: "Terms and Conditions",
   description:
-    "Read the terms and conditions for using Agent Growth Hub. Clear guidelines on user responsibilities, service usage, and our commitment to you.",
+    "Read the terms and conditions for using TrendForge. Clear guidelines on user responsibilities, service usage, and our commitment to you.",
 };
 
 export default function TermsAndConditionsPage() {

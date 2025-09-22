@@ -5,9 +5,9 @@ import { urbanist } from "@/components/ui/fonts";
 import PrivacyPolicyClient from "@/components/legal/PrivacyPolicyClient";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Agent Growth Hub",
+  title: "Privacy Policy",
   description:
-    "Learn how Agent Growth Hub protects your privacy and handles your personal information. Comprehensive privacy policy covering data collection, usage, and your rights.",
+    "Learn how TrendForge protects your privacy and handles your personal information. Comprehensive privacy policy covering data collection, usage, and your rights.",
 };
 
 export default function PrivacyPolicyPage() {

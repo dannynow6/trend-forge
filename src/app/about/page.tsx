@@ -5,9 +5,9 @@ import { urbanist } from "@/components/ui/fonts";
 import AboutMain from "@/components/about/AboutMain";
 
 export const metadata: Metadata = {
-  title: "About | Agent Growth Hub",
+  title: "About",
   description:
-    "Learn about Agent Growth Hub - the ultimate AI-powered platform for creating viral LinkedIn content. Generate engaging posts, discover trending topics, and grow your professional presence.",
+    "Learn about TrendForge - the ultimate AI-powered platform for creating viral LinkedIn content. Generate engaging posts, discover trending topics, and grow your professional presence.",
 };
 
 export default function AboutPage() {

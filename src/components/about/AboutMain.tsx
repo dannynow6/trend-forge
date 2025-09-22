@@ -113,7 +113,7 @@ const AboutMain = () => {
           <div className="flex items-center justify-center p-4 rounded-full h-32 w-32 bg-gradient-to-br from-sky-100 to-blue-100 shadow-lg">
             <Image
               src={Logo}
-              alt="Agent Growth Hub Logo"
+              alt="TrendForge Logo"
               className="w-24 h-24"
               priority
             />
@@ -124,7 +124,7 @@ const AboutMain = () => {
           className={`${oswald.className} text-5xl md:text-6xl font-bold text-slate-800 mb-6 tracking-wide`}
           variants={itemVariants}
         >
-          Agent Growth Hub
+          TrendForge
         </motion.h1>
 
         <motion.div
@@ -207,7 +207,7 @@ const AboutMain = () => {
           className={`${oswald.className} text-4xl font-bold text-center text-slate-800 mb-4`}
           variants={itemVariants}
         >
-          Why Choose Agent Growth Hub?
+          Why Choose TrendForge?
         </motion.h2>
 
         <motion.p

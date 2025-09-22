@@ -24,7 +24,7 @@ const TermsAndConditionsClient = () => {
       title: "Acceptance of Terms",
       icon: CheckCircle,
       content: [
-        "By accessing and using Agent Growth Hub, you accept and agree to be bound by these terms",
+        "By accessing and using TrendForge, you accept and agree to be bound by these terms",
         "If you do not agree to these terms, please discontinue use of our services",
         "We reserve the right to update these terms at any time with reasonable notice",
         "Continued use after changes constitutes acceptance of the modified terms",
@@ -34,7 +34,7 @@ const TermsAndConditionsClient = () => {
       title: "Service Description",
       icon: FileText,
       content: [
-        "Agent Growth Hub provides AI-powered LinkedIn content generation services",
+        "TrendForge provides AI-powered LinkedIn content generation services",
         "Our platform helps users create professional posts, ideas, and social media content",
         "Services are provided on an 'as-is' basis and may be modified or discontinued",
         "We do not guarantee specific results or outcomes from using our platform",
@@ -55,7 +55,7 @@ const TermsAndConditionsClient = () => {
       icon: Shield,
       content: [
         "You retain ownership of content you create using our platform",
-        "Agent Growth Hub retains rights to our proprietary AI technology and platform",
+        "TrendForge retains rights to our proprietary AI technology and platform",
         "You grant us a limited license to process your content for service delivery",
         "Respect third-party intellectual property rights when creating content",
       ],
@@ -101,12 +101,12 @@ const TermsAndConditionsClient = () => {
     {
       title: "Service Modifications",
       content:
-        "Agent Growth Hub may modify, suspend, or discontinue any aspect of the service at any time. We will provide reasonable notice for significant changes that affect user experience.",
+        "TrendForge may modify, suspend, or discontinue any aspect of the service at any time. We will provide reasonable notice for significant changes that affect user experience.",
     },
     {
       title: "Governing Law",
       content:
-        "These terms are governed by the laws of the jurisdiction where Agent Growth Hub operates. Any disputes will be resolved through appropriate legal channels in that jurisdiction.",
+        "These terms are governed by the laws of the jurisdiction where TrendForge operates. Any disputes will be resolved through appropriate legal channels in that jurisdiction.",
     },
     {
       title: "Contact & Support",
@@ -132,7 +132,7 @@ const TermsAndConditionsClient = () => {
       <LegalHero
         icon={Scale}
         title="Terms and Conditions"
-        description="Please read these terms carefully. They govern your use of Agent Growth Hub and outline the rights and responsibilities of all users."
+        description="Please read these terms carefully. They govern your use of TrendForge and outline the rights and responsibilities of all users."
         gradientColors={gradientColors}
         itemVariants={itemVariants}
         iconVariants={iconVariants}
