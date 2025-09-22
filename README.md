@@ -6,6 +6,10 @@ Create viral LinkedIn content with AI-powered precision. Generate engaging posts
 
 ![TrendForge](./assets/logo.png)
 
+## Note on Using TrendForge
+
+- **Local Deployment** - TrendForge was created for local deployment and does not have complete SEO files created. If deployed in production environment, I recommend creating manifest.json, robots.ts, sitemap.ts, as well as updating layout.ts metadata
+
 ## ✨ Features
 
 - **AI-Powered Ideas** - Generate viral LinkedIn post ideas using advanced AI that understands current trends and engagement patterns
