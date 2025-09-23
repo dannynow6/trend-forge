@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions for validation
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isValidString(value, minLength, maxLength) {
+      return value is string && 
+             value.size() >= minLength && 
+             value.size() <= maxLength;
+    }
+    
+    function isValidArray(value, maxSize) {
+      return value is list && value.size() <= maxSize;
+    }
+    
+    function isValidNumber(value, min, max) {
+      return value is number && value >= min && value <= max;
+    }
+    
+    // LinkedIn Posts Collection
+    match /linkedin_posts/{postId} {
+      // Users can read, create, update, and delete their own posts
+      allow read, write: if isAuthenticated() && isOwner(resource.data.userId);
+      
+      // Allow creation only if the user is the owner
+      allow create: if isAuthenticated() && 
+                       isOwner(request.resource.data.userId) &&
+                       validateLinkedInPost(request.resource.data);
+      
+      // Allow updates only if the user is the owner and doesn't change ownership
+      allow update: if isAuthenticated() && 
+                       isOwner(resource.data.userId) &&
+                       request.resource.data.userId == resource.data.userId &&
+                       validateLinkedInPost(request.resource.data);
+    }
+    
+    // Post Ideas Collection
+    match /post_ideas/{ideaId} {
+      // Users can read, create, update, and delete their own post ideas
+      allow read, write: if isAuthenticated() && isOwner(resource.data.userId);
+      
+      // Allow creation only if the user is the owner
+      allow create: if isAuthenticated() && 
+                       isOwner(request.resource.data.userId) &&
+                       validatePostIdea(request.resource.data);
+      
+      // Allow updates only if the user is the owner and doesn't change ownership
+      allow update: if isAuthenticated() && 
+                       isOwner(resource.data.userId) &&
+                       request.resource.data.userId == resource.data.userId &&
+                       validatePostIdea(request.resource.data);
+    }
+    
+    // Validation functions for LinkedIn Posts
+    function validateLinkedInPost(data) {
+      return data.keys().hasAll(['content', 'hashtags', 'firstComment', 'userId', 'createdAt']) &&
+             // Content validation
+             isValidString(data.content, 1, 3000) &&
+             // Hashtags validation - array of strings, max 30 hashtags
+             isValidArray(data.hashtags, 30) &&
+             data.hashtags.hasAll([]) && // Ensure it's an array
+             // First comment validation
+             isValidString(data.firstComment, 0, 1000) &&
+             // User ID validation
+             isValidString(data.userId, 1, 128) &&
+             // Created at validation
+             data.createdAt is timestamp &&
+             // Optional fields validation
+             ((!('viral_score' in data)) || data.viral_score == null || isValidNumber(data.viral_score, 0, 100)) &&
+             ((!('visual_content' in data)) || data.visual_content == null || isValidString(data.visual_content, 0, 500));
+    }
+    
+    // Validation functions for Post Ideas
+    function validatePostIdea(data) {
+      return data.keys().hasAll(['title', 'viralPotential', 'hook', 'description', 'targetAudience', 'contentType', 'trendingFactors', 'userId', 'createdAt']) &&
+             // Title validation
+             isValidString(data.title, 1, 200) &&
+             // Viral potential validation (0-100 scale)
+             isValidNumber(data.viralPotential, 0, 100) &&
+             // Hook validation
+             isValidString(data.hook, 1, 500) &&
+             // Description validation
+             isValidString(data.description, 1, 2000) &&
+             // Target audience validation
+             isValidString(data.targetAudience, 1, 300) &&
+             // Content type validation
+             isValidString(data.contentType, 1, 100) &&
+             // Trending factors validation - array of strings, max 20 factors
+             isValidArray(data.trendingFactors, 20) &&
+             data.trendingFactors.hasAll([]) && // Ensure it's an array
+             // User ID validation
+             isValidString(data.userId, 1, 128) &&
+             // Created at validation
+             data.createdAt is timestamp;
+    }
+    
+    // Deny all other database access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
