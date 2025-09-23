@@ -253,7 +253,7 @@ WORKFLOW PHASES:
 
 MUST-FOLLOW FORMATTING RULES:
 1. **Hook**: First 2-3 lines must create curiosity, don't spoil the punchline
-2. **Length**: Body ≤ 180-200 words; use short lines, plenty of white space
+2. **Length**: Body ≤ 225-300 words; use short lines, plenty of white space
 3. **Value > pitch**: Frame around problem/lesson/useful steps; no salesy copy
 4. **Story arc**: If applicable use: challenge → action → result → lesson
 5. **Readability**: Plain language, no jargon; bullets/short lines welcome
