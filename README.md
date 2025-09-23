@@ -50,6 +50,7 @@ Create viral LinkedIn content with AI-powered precision. Generate engaging posts
 - **[OpenAI Agents SDK](https://openai.github.io/openai-agents-js/)** - AI-powered content generation
 - **[OpenAI API](https://openai.com/)** - GPT models for content creation
 - **[Firebase](https://firebase.google.com/)** - Authentication & Firestore database
+  - **Important** - Copy the contents of firestore.rules and use these rules as your production firestore rules
 - **[Zod](https://zod.dev/)** - Schema validation
 
 ### Development Tools
