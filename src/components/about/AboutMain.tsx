@@ -1,7 +1,6 @@
 "use client";
 import { motion, Variants } from "motion/react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Lightbulb,
   TrendingUp,
@@ -15,7 +14,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { oswald } from "../ui/fonts";
-import Logo from "../../../public/logo.png";
+import Logo from "@/components/home/Logo";
 
 const AboutMain = () => {
   const features = [
@@ -105,20 +104,9 @@ const AboutMain = () => {
     >
       {/* Hero Section */}
       <motion.section className="text-center py-16" variants={itemVariants}>
-        <motion.div
-          className="flex justify-center mb-8"
-          variants={iconVariants}
-          whileHover="hover"
-        >
-          <div className="flex items-center justify-center p-4 rounded-full h-32 w-32 bg-gradient-to-br from-sky-100 to-blue-100 shadow-lg">
-            <Image
-              src={Logo}
-              alt="TrendForge Logo"
-              className="w-24 h-24"
-              priority
-            />
-          </div>
-        </motion.div>
+        <div className="flex justify-center mb-8">
+          <Logo />
+        </div>
 
         <motion.h1
           className={`${oswald.className} text-5xl md:text-6xl font-bold text-slate-800 mb-6 tracking-wide`}

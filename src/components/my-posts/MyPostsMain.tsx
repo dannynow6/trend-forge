@@ -9,16 +9,25 @@ import {
   Hash,
   TrendingUp,
   Trash2,
-  Edit,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { oswald } from "../ui/fonts";
 import SignInGoogle from "../auth/SignInGoogle";
 
 const MyPostsMain = () => {
-  const { posts, isLoading, error, removePost } = usePosts();
+  const {
+    posts,
+    isLoading,
+    error,
+    removePost,
+    hasMore,
+    loadNextPage,
+    currentPage,
+  } = usePosts();
   const { user } = useAuth() as { user: any };
   const [deletingPost, setDeletingPost] = useState<string | null>(null);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   if (!user) {
     return (
@@ -71,6 +80,12 @@ const MyPostsMain = () => {
     setDeletingPost(null);
   };
 
+  const handleLoadMore = async () => {
+    setLoadingMore(true);
+    await loadNextPage();
+    setLoadingMore(false);
+  };
+
   const getPostPreview = (content: string, maxLength: number = 120) => {
     if (content.length <= maxLength) return content;
     return content.substring(0, maxLength).trim() + "...";
@@ -116,8 +131,13 @@ const MyPostsMain = () => {
           My Saved Posts
         </h1>
         <p className="text-gray-600">
-          You have {posts.length} saved LinkedIn post
-          {posts.length !== 1 ? "s" : ""}
+          {currentPage === 1 && !hasMore
+            ? `You have ${posts.length} saved LinkedIn post${
+                posts.length !== 1 ? "s" : ""
+              }`
+            : `Showing ${posts.length} posts${
+                hasMore ? " (more available)" : ""
+              }`}
         </p>
       </div>
 
@@ -199,10 +219,35 @@ const MyPostsMain = () => {
         ))}
       </div>
 
+      {/* Pagination Controls */}
+      {hasMore && (
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={handleLoadMore}
+            disabled={loadingMore}
+            className="inline-flex cursor-pointer items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 hover:scale-[1.01] transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Load more posts"
+          >
+            {loadingMore ? (
+              <>
+                <div className="w-4 h-4 animate-spin rounded-full border-2 border-gray-400 border-t-transparent"></div>
+                Loading more...
+              </>
+            ) : (
+              <>
+                Load more posts
+                <ChevronRight className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       <div className="text-center pt-8">
         <Link
           href="/"
           className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:scale-[1.01] transition-all duration-200 ease-in-out"
+          aria-label="Create another post"
         >
           Create another post
         </Link>
