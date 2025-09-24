@@ -8,12 +8,12 @@ import {
 } from "react";
 import { useAuth } from "./AuthContext";
 import {
-  getUserPosts,
+  // getUserPosts,
   getUserPostsPaginated,
   deletePost,
   updatePost,
   LinkedInPost,
-  PaginatedResult,
+  // PaginatedResult,
 } from "@/lib/firebase/getPosts";
 import { DocumentSnapshot } from "firebase/firestore";
 import { addNewPost } from "@/lib/firebase/addNewPost";

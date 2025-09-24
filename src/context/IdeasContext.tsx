@@ -8,11 +8,14 @@ import {
 } from "react";
 import { useAuth } from "./AuthContext";
 import {
-  getUserPostIdeas,
+  // getUserPostIdeas,
+  getUserPostIdeasPaginated,
   deletePostIdea,
   updatePostIdea,
   PostIdea,
+  // PaginatedIdeasResult,
 } from "@/lib/firebase/getPostIdeas";
+import { DocumentSnapshot } from "firebase/firestore";
 import { addNewPostIdea } from "@/lib/firebase/addNewPostIdea";
 import { Timestamp } from "firebase/firestore";
 
@@ -20,6 +23,8 @@ interface IdeasContextType {
   ideas: PostIdea[];
   isLoading: boolean;
   error: string | null;
+  hasMore: boolean;
+  currentPage: number;
   addIdea: (
     ideaData: Omit<PostIdea, "id" | "userId" | "createdAt">
   ) => Promise<{ success: boolean; id?: string; error?: any }>;
@@ -29,16 +34,22 @@ interface IdeasContextType {
     updateData: Partial<PostIdea>
   ) => Promise<{ success: boolean; error?: any }>;
   refreshIdeas: () => Promise<void>;
+  loadNextPage: () => Promise<void>;
+  resetPagination: () => void;
 }
 
 const IdeasContext = createContext<IdeasContextType>({
   ideas: [],
   isLoading: true,
   error: null,
+  hasMore: false,
+  currentPage: 1,
   addIdea: async () => ({ success: false }),
   removeIdea: async () => ({ success: false }),
   editIdea: async () => ({ success: false }),
   refreshIdeas: async () => {},
+  loadNextPage: async () => {},
+  resetPagination: () => {},
 });
 
 interface IdeasProviderProps {
@@ -49,11 +60,17 @@ export const IdeasProvider = ({ children }: IdeasProviderProps) => {
   const [ideas, setIdeas] = useState<PostIdea[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const { user } = useAuth() as { user: any };
 
-  const fetchIdeas = async () => {
+  const fetchIdeas = async (reset: boolean = true) => {
     if (!user?.uid) {
       setIdeas([]);
+      setHasMore(false);
+      setCurrentPage(1);
+      setLastDoc(null);
       setIsLoading(false);
       return;
     }
@@ -61,8 +78,23 @@ export const IdeasProvider = ({ children }: IdeasProviderProps) => {
     try {
       setIsLoading(true);
       setError(null);
-      const userIdeas = await getUserPostIdeas(user.uid);
-      setIdeas(userIdeas);
+
+      const result = await getUserPostIdeasPaginated(
+        user.uid,
+        10,
+        reset ? undefined : lastDoc || undefined
+      );
+
+      if (reset) {
+        setIdeas(result.ideas);
+        setCurrentPage(1);
+      } else {
+        setIdeas((prev) => [...prev, ...result.ideas]);
+        setCurrentPage((prev) => prev + 1);
+      }
+
+      setHasMore(result.hasMore);
+      setLastDoc(result.lastDoc);
     } catch (err) {
       console.error("Error fetching ideas:", err);
       setError("Failed to fetch ideas");
@@ -138,22 +170,38 @@ export const IdeasProvider = ({ children }: IdeasProviderProps) => {
   };
 
   const refreshIdeas = async () => {
-    await fetchIdeas();
+    await fetchIdeas(true);
+  };
+
+  const loadNextPage = async () => {
+    if (!hasMore || isLoading) return;
+    await fetchIdeas(false);
+  };
+
+  const resetPagination = () => {
+    setIdeas([]);
+    setHasMore(false);
+    setCurrentPage(1);
+    setLastDoc(null);
   };
 
   // Fetch ideas when user changes
   useEffect(() => {
-    fetchIdeas();
+    fetchIdeas(true);
   }, [user?.uid]);
 
   const value: IdeasContextType = {
     ideas,
     isLoading,
     error,
+    hasMore,
+    currentPage,
     addIdea,
     removeIdea,
     editIdea,
     refreshIdeas,
+    loadNextPage,
+    resetPagination,
   };
 
   return (

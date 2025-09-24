@@ -10,15 +10,25 @@ import {
   Trash2,
   Users,
   FileText,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { oswald } from "../ui/fonts";
 import SignInGoogle from "../auth/SignInGoogle";
 
 const MyIdeasMain = () => {
-  const { ideas, isLoading, error, removeIdea } = useIdeas();
+  const {
+    ideas,
+    isLoading,
+    error,
+    removeIdea,
+    hasMore,
+    loadNextPage,
+    currentPage,
+  } = useIdeas();
   const { user } = useAuth() as { user: any };
   const [deletingIdea, setDeletingIdea] = useState<string | null>(null);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   if (!user) {
     return (
@@ -71,6 +81,12 @@ const MyIdeasMain = () => {
     setDeletingIdea(null);
   };
 
+  const handleLoadMore = async () => {
+    setLoadingMore(true);
+    await loadNextPage();
+    setLoadingMore(false);
+  };
+
   const getIdeaPreview = (description: string, maxLength: number = 120) => {
     if (description.length <= maxLength) return description;
     return description.substring(0, maxLength).trim() + "...";
@@ -116,8 +132,13 @@ const MyIdeasMain = () => {
           My Saved Ideas
         </h1>
         <p className="text-gray-600">
-          You have {ideas.length} saved LinkedIn post idea
-          {ideas.length !== 1 ? "s" : ""}
+          {currentPage === 1 && !hasMore
+            ? `You have ${ideas.length} saved LinkedIn post idea${
+                ideas.length !== 1 ? "s" : ""
+              }`
+            : `Showing ${ideas.length} ideas${
+                hasMore ? " (more available)" : ""
+              }`}
         </p>
       </div>
 
@@ -209,10 +230,35 @@ const MyIdeasMain = () => {
         ))}
       </div>
 
+      {/* Pagination Controls */}
+      {hasMore && (
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={handleLoadMore}
+            disabled={loadingMore}
+            className="inline-flex cursor-pointer items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 hover:scale-[1.01] transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Load more ideas"
+          >
+            {loadingMore ? (
+              <>
+                <div className="w-4 h-4 animate-spin rounded-full border-2 border-gray-400 border-t-transparent"></div>
+                Loading more...
+              </>
+            ) : (
+              <>
+                Load more ideas
+                <ChevronRight className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       <div className="text-center pt-8">
         <Link
           href="/"
           className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:scale-[1.01] transition-all duration-200 ease-in-out"
+          aria-label="Create another idea"
         >
           Create another idea
         </Link>
