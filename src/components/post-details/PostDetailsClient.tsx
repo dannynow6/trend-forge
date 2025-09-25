@@ -1,10 +1,13 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { usePosts } from "@/context/PostsContext";
 import { useAuth } from "@/context/AuthContext";
 import LinkedInPostDisplay from "@/components/home/LinkedInPostDisplay";
-import { ArrowLeft, Trash2, Edit } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 const PostDetailsClient = () => {

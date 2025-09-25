@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 import { Inter, Oswald, Urbanist } from "next/font/google";
 
 export const inter = Inter({

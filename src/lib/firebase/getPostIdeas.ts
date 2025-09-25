@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 import { db } from "./firebase.config";
 import {
   collection,

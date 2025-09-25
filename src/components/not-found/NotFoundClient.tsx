@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import Link from "next/link";
 import Image from "next/image";

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { Lightbulb, TrendingUp, Users, FileText, Hash } from "lucide-react";
 import { PostIdea } from "@/lib/firebase/getPostIdeas";

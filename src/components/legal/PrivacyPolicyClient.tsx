@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { motion } from "motion/react";
 import { Shield, Lock, UserCheck, Globe, FileText } from "lucide-react";

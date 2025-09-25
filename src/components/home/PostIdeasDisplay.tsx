@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { useState } from "react";
 import { Copy, TrendingUp, Users, Target, Save } from "lucide-react";

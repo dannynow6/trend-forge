@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { useIdeas } from "@/context/IdeasContext";
 import { useAuth } from "@/context/AuthContext";

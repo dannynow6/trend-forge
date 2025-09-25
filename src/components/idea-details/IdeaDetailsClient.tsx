@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";

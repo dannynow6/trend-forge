@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 import { Variants } from "motion/react";
 
 export const useLegalAnimations = () => {

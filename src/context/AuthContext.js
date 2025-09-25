@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "@/lib/firebase/firebase.config";

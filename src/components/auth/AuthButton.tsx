@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 const AuthButton = ({
   ariaLabel,
   bgColor = "bg-sky-100",

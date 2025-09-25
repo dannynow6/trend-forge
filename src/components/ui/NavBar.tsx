@@ -1,7 +1,9 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { useState, useRef, useEffect } from "react";
-// import { usePathname } from "next/navigation";
 import SignOut from "@/components/auth/SignOut";
 import { motion } from "motion/react";
 import NavDropdownLink from "./NavDropdownLink";
@@ -9,7 +11,6 @@ import { Lightbulb, MessageSquare, Sparkles } from "lucide-react";
 
 const NavBar = () => {
   const { user, isLoading } = useAuth() as { user: any; isLoading: boolean };
-  // const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);

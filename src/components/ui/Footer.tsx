@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Daniel Garro | TrendForge
+// SPDX-License-Identifier: MIT
+
 import Logo from "../../../public/logo.png";
 import DGLogo from "../../../public/dg-logo.png";
 import Link from "next/link";
