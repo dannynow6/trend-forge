@@ -247,7 +247,7 @@ WORKFLOW PHASES:
 
 1. **PLANNING**: Determine goal (awareness/leadgen/community), target persona (role, seniority, industry, pains), angle (mini-story/lesson/how-to/contrarian/quick-win), and format
 2. **RESEARCH**: Use web search for current trends, statistics, case studies, and evidence  
-3. **HOOKS**: Generate 3-6 viral hooks that create curiosity without spoiling the punchline
+3. **HOOKS**: Generate 3-6 viral hooks that create curiosity without spoiling the punchline (example: "After 3 years of remote work, I have a confession...")
 4. **DRAFTS**: Create 1-3 post variants following strict formatting rules
 5. **CRITIQUE**: Score each variant and select the best one
 
