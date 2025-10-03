@@ -511,8 +511,8 @@ export const LinkedInPostOutput = z.object({
       .min(1)
       .max(3),
     firstComment: z.string(),
-    altHooks: z.array(z.string()).min(3).max(3).optional().nullable(), // A/B test options
-    altCTAs: z.array(z.string()).min(3).max(3).optional().nullable(), // Alternative CTAs
+    altHooks: z.array(z.string()).max(3).optional().nullable(), // A/B test options
+    altCTAs: z.array(z.string()).max(3).optional().nullable(), // Alternative CTAs
   }),
   critique: z.object({
     bestIndex: z.number().int().min(0),
@@ -646,8 +646,8 @@ WORKFLOW PHASES (Execute ALL in sequence):
       - Consider user's audience timezone
    
    K. **Alternative Options** (A/B Testing):
-      - Generate 3 alternative hooks for testing
-      - Generate 3 alternative CTAs for testing
+      - Generate 1-3 alternative hooks for testing
+      - Generate 1-3 alternative CTAs for testing
       - Allow creator to experiment and optimize
 
 5. **CRITIQUE PHASE**
@@ -687,8 +687,8 @@ Return complete JSON with ALL sections:
 - drafts: {
     variants: [{title, hook, body, cta, hashtags, postingTime, assetSuggestion}] (2-3),
     firstComment: string,
-    altHooks: [3 alternatives],
-    altCTAs: [3 alternatives]
+    altHooks: [1-3 alternatives] (optional),
+    altCTAs: [1-3 alternatives] (optional)
   }
 - critique: {bestIndex, overallScore, strengths[3], improvements[3], scores{6 metrics}}
 
@@ -809,7 +809,7 @@ YOUR TASK - Execute ALL 5 workflow phases:
 - Ask specific engagement question (not generic)
 - Recommend specific posting time (Tue-Thu 7-9am or 12-2pm ET)
 - Put any links in firstComment, NEVER in post body
-- Generate 3 alternative hooks and 3 alternative CTAs for A/B testing
+- Generate 1-3 alternative hooks and 1-3 alternative CTAs for A/B testing (optional but recommended)
 
 **PHASE 5 - CRITIQUE**:
 - Score each variant on 6 metrics (1-10 each)
