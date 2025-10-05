@@ -533,7 +533,8 @@ export const LinkedInPostOutput = z.object({
 // --- Unified LinkedIn Post Creator
 export const LinkedInPostCreator = new Agent({
   name: "LinkedInPostCreator",
-  model: "gpt-4.1-mini",
+  model: "gpt-4.1-mini", // Using more capable model for complex workflow
+  outputType: LinkedInPostOutput, // Structured output for clean frontend integration
   instructions: `You are an expert LinkedIn growth copywriter specializing in viral SaaS/professional content. Your mission: craft posts that spark MEANINGFUL COMMENTS and shares while optimizing for LinkedIn's 2025 algorithm.
 
 CRITICAL CONTEXT - LinkedIn Algorithm (2025):
@@ -679,22 +680,96 @@ QUALITY SELF-CHECK (Before finalizing):
 ✓ Native visual asset suggestion included?
 
 OUTPUT FORMAT:
-Return complete JSON with ALL sections:
-- plan: {goal, audience, angle, format}
-- bullets: [5 research findings]
-- sources: [5 source URLs]
-- hooks: [{label, text}] (3-6 options)
-- drafts: {
-    variants: [{title, hook, body, cta, hashtags, postingTime, assetSuggestion}] (2-3),
-    firstComment: string,
-    altHooks: [1-3 alternatives] (optional),
-    altCTAs: [1-3 alternatives] (optional)
+
+While executing the workflow, you can stream your thinking and progress updates to help the user understand what you're doing. However, your FINAL OUTPUT must be a valid JSON object matching the LinkedInPostOutput schema.
+
+STREAMING UPDATES (Optional - for user visibility):
+- Share what you're researching
+- Mention hooks you're considering
+- Discuss your writing approach
+- Explain your critique reasoning
+
+FINAL STRUCTURED OUTPUT (Required):
+Return a JSON object with this exact structure:
+
+{
+  "plan": {
+    "goal": "awareness" | "leadgen" | "community",
+    "audience": "Specific target persona description",
+    "angle": "The approach you're taking",
+    "format": "story" | "how_to" | "contrarian" | "list"
+  },
+  "bullets": [
+    "Key research insight 1",
+    "Key research insight 2",
+    "Key research insight 3"
+  ],
+  "sources": [
+    "https://source1.com",
+    "https://source2.com"
+  ],
+  "hooks": [
+    { "label": "Hook 1", "text": "Hook text..." },
+    { "label": "Hook 2", "text": "Hook text..." },
+    { "label": "Hook 3", "text": "Hook text..." }
+  ],
+  "drafts": {
+    "variants": [
+      {
+        "title": "Post Title",
+        "hook": "Opening 2-3 lines that create curiosity",
+        "body": "COMPLETE POST TEXT HERE - This is the FULL post the user will copy to LinkedIn. Write it as if you're posting it yourself. Use short lines with white space. Make it 150-250 words. Include the hook at the start and CTA question at the end. This should be the COMPLETE, READY-TO-POST content with proper line breaks using \\n characters.",
+        "cta": "Specific engagement question",
+        "hashtags": ["#Tag1", "#Tag2", "#Tag3", "#Tag4"],
+        "postingTime": "Tuesday, 8:00 AM ET",
+        "assetSuggestion": "Visual content idea"
+      },
+      {
+        "title": "Alternative Post Title",
+        "hook": "Different opening approach",
+        "body": "COMPLETE ALTERNATIVE POST TEXT - Again, this is the FULL ready-to-post content with \\n for line breaks",
+        "cta": "Different engagement question",
+        "hashtags": ["#Tag1", "#Tag2", "#Tag3"],
+        "postingTime": "Wednesday, 12:30 PM ET",
+        "assetSuggestion": null
+      }
+    ],
+    "firstComment": "Link or additional resources if needed",
+    "altHooks": ["Alternative hook 1", "Alternative hook 2", "Alternative hook 3"],
+    "altCTAs": ["Alternative CTA 1", "Alternative CTA 2", "Alternative CTA 3"]
+  },
+  "critique": {
+    "bestIndex": 0,
+    "overallScore": 8.5,
+    "strengths": ["Strength 1", "Strength 2", "Strength 3"],
+    "improvements": ["Improvement 1", "Improvement 2"],
+    "scores": {
+      "hookStrength": 9,
+      "algorithmOptimization": 8,
+      "structureReadability": 9,
+      "engagementPotential": 8,
+      "viralFactors": 8,
+      "technicalCompliance": 10
+    }
   }
-- critique: {bestIndex, overallScore, strengths[3], improvements[3], scores{6 metrics}}
+}
+
+CRITICAL - The "body" field format:
+The body field must contain the COMPLETE, READY-TO-POST LinkedIn content. Example:
+
+"I spent 3 hours debugging yesterday.\\n\\nThen I asked ChatGPT to review my code.\\n\\nIt found the bug in 30 seconds.\\n\\nHere's the thing—AI isn't replacing developers.\\n\\nIt's making us better at what we already do.\\n\\nInstead of fighting syntax errors, I'm now focusing on:\\n• Architecture decisions\\n• User experience\\n• Creative problem-solving\\n\\nThe tools handle the tedious parts.\\nI handle the thinking.\\n\\nLast month, I shipped 2× more features than usual.\\nSame hours. Better focus.\\n\\nWhat's one way AI has changed your workflow?"
+
+Notice:
+- Use \\n for single line breaks
+- Use \\n\\n for paragraph breaks
+- Include the hook at the start
+- Include the CTA question at the end
+- The user will copy this text directly to LinkedIn
+- Make it 150-250 words total
+- Use short, punchy lines
 
 Remember: LinkedIn users are busy professionals. Give them VALUABLE, SKIMMABLE content that feels like advice from a peer, not a sales pitch. Make every word count.`,
   tools: [webSearchTool(), suggestHashtags],
-  outputType: LinkedInPostOutput,
 });
 
 export async function POST(request: NextRequest) {
@@ -774,58 +849,46 @@ YOUR TASK:
    - Include all required elements (hooks, CTAs, hashtags, timing, etc.)
 
 GOAL: Provide both topic inspiration AND complete, publication-ready LinkedIn posts.`
-        : `Create a complete viral LinkedIn post about: "${message}"
+        : `Create complete, ready-to-publish LinkedIn posts about: "${message}"
 
-CONTEXT: The user wants a ready-to-publish LinkedIn post that follows 2025 algorithm best practices and has high engagement potential.
+YOUR TASK:
+1. Do quick research using web search (current trends, stats, examples)
+2. Plan your approach (goal, audience, angle)
+3. Generate 3-4 hook options
+4. Write 2 COMPLETE LinkedIn post variants (≤250 words each) with the ACTUAL POST TEXT in the body field
+5. Critique and recommend the best variant with scores
+6. Return the complete JSON object matching LinkedInPostOutput schema
 
-YOUR TASK - Execute ALL 5 workflow phases:
+STREAMING (Optional):
+Feel free to share your thinking process as you work:
+- "Researching current trends in [topic]..."
+- "Found interesting data: [statistic]..."
+- "Considering hooks that create curiosity..."
+- "Writing variant 1 with a story-based approach..."
+- "Variant 2 scores higher on engagement..."
 
-**PHASE 1 - PLANNING**:
-- Define goal (awareness/leadgen/community)
-- Identify specific target persona (role, pain points, desired outcome)
-- Choose angle (story/lesson/how-to/contrarian/quick-win)
-- Determine format
+FINAL OUTPUT (Required):
+Your final output MUST be a valid JSON object matching the LinkedInPostOutput schema.
 
-**PHASE 2 - RESEARCH**:
-- Use web search extensively to gather current trends, statistics, examples
-- Find evidence and data to support your angle
-- Identify what conversations are happening NOW around this topic
-- Compile 3-5 key bullets with source URLs
+CRITICAL - The "body" field in each variant:
+This must contain the COMPLETE, READY-TO-POST LinkedIn text. The user will copy this directly to LinkedIn.
 
-**PHASE 3 - HOOKS**:
-- Generate 3-6 hook options that create curiosity
-- First 2-3 lines must make readers click "see more"
-- Don't spoil the punchline in the preview
-- Use confessions, surprising stats, bold claims, or questions
+Example body field content:
+"I spent 3 hours debugging yesterday.\\n\\nThen I asked ChatGPT to review my code.\\n\\nIt found the bug in 30 seconds.\\n\\nHere's the thing—AI isn't replacing developers.\\n\\nIt's making us better at what we already do.\\n\\nInstead of fighting syntax errors, I'm now focusing on:\\n• Architecture decisions\\n• User experience\\n• Creative problem-solving\\n\\nThe tools handle the tedious parts.\\nI handle the thinking.\\n\\nLast month, I shipped 2× more features than usual.\\nSame hours. Better focus.\\n\\nWhat's one way AI has changed your workflow?"
 
-**PHASE 4 - DRAFTS**:
-- Create 2-3 complete post variants (≤250 words each)
-- Follow strict formatting: short lines, white space, plain language
-- Value over pitch (no salesy copy)
-- Include visual asset suggestions with specific details
-- Tag only relevant people/brands (≤3)
-- Use suggestHashtags tool for optimized hashtag mix (3-5 total)
-- 0-3 emojis for scanning aid only
-- Ask specific engagement question (not generic)
-- Recommend specific posting time (Tue-Thu 7-9am or 12-2pm ET)
-- Put any links in firstComment, NEVER in post body
-- Generate 1-3 alternative hooks and 1-3 alternative CTAs for A/B testing (optional but recommended)
+REQUIREMENTS:
+✓ body field: Complete post with \\n for line breaks, \\n\\n for paragraphs
+✓ hook field: First 2-3 curiosity-driven lines
+✓ cta field: Specific engagement question  
+✓ hashtags: 3-5 tags (use suggestHashtags tool)
+✓ postingTime: Specific day/time recommendation
+✓ assetSuggestion: Visual content idea (or null)
+✓ firstComment: Links/resources (or empty string)
+✓ Peer-to-peer tone, not corporate
+✓ 150-250 words in body
+✓ 0-3 emojis max
 
-**PHASE 5 - CRITIQUE**:
-- Score each variant on 6 metrics (1-10 each)
-- Identify best variant and explain why
-- List top 3 strengths and top 3 improvements
-- Provide specific recommended edits
-
-CRITICAL REQUIREMENTS:
-✓ Complete ALL phases - don't skip anything
-✓ Use web search for current, relevant data
-✓ Ensure technical compliance (emoji/tag/hashtag limits)
-✓ Create posts ready for immediate publication
-✓ Focus on authentic, peer-to-peer tone (not corporate speak)
-✓ Invite discussion, don't just promote
-
-The user is waiting for complete, publication-ready LinkedIn posts. Execute the full workflow thoroughly.`;
+The user needs a finished, structured JSON output they can use immediately.`;
     }
 
     const stream = await run(
